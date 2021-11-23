@@ -6,7 +6,7 @@ import com.gasbooking.entity.SurrenderCylinder;
 @Repository
 public interface ISurrenderCylinderRepository extends JpaRepository<SurrenderCylinder,Integer>{
 	
-	
+	SurrenderCylinder findBycustomerId(int surrendeId);
 
 }
 
