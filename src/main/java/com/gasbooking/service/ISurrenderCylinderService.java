@@ -5,8 +5,8 @@ import com.gasbooking.entity.SurrenderCylinder;
 public interface ISurrenderCylinderService {
 	
 	SurrenderCylinder insertSurrenderCylinder(SurrenderCylinder sc);
-	 void updateSurrenderCylinder(SurrenderCylinder sc);
-	void deleteSurrenderCylinder(SurrenderCylinder sc);
+	 String updateSurrenderCylinder(SurrenderCylinder sc,int Surrenderid);
+	String deleteSurrenderCylinder(SurrenderCylinder sc,int surrenderid);
 	int CountSurrenderCylinders();
 
 }
