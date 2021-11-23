@@ -5,15 +5,20 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 
 public class SurrenderCylinder {
 	
 	@Id
+	@NotNull(message ="SurrenderId cannot be null ")
 	@GeneratedValue
-
+    // data members
 	private int surrenderId;
+	@Pattern(regexp = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$", message = "Given LocalDate. is not valid.")
 	private LocalDate surrenderDate;
 	private Customer customer;
 	private Cylinder cylinder;
@@ -22,7 +27,7 @@ public class SurrenderCylinder {
 		super();
 	}
 	
-	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Customer customer, Cylinder cylinder) {
+	public SurrenderCylinder(int surrenderId,@NotBlank(message = "Local date can't be empty") @Pattern(regexp = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$", message = "Given local Date. is not valid.") LocalDate surrenderDate, Customer customer, Cylinder cylinder) {
 		super();
 		this.surrenderId = surrenderId;
 		this.surrenderDate = surrenderDate;
