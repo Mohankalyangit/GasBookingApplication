@@ -4,9 +4,12 @@ import com.gasbooking.entity.SurrenderCylinder;
 
 public interface ISurrenderCylinderService {
 	
-	SurrenderCylinder insertSurrenderCylinder(SurrenderCylinder sc);
-	SurrenderCylinder updateSurrenderCylinder(SurrenderCylinder sc);
-	SurrenderCylinder deleteSurrenderCylinder(SurrenderCylinder sc);
-	int CountSurrenderCylinders();
+	public SurrenderCylinder insertSurrenderCylinder(SurrenderCylinder sc);
+	
+	public SurrenderCylinder updateSurrenderCylinder(SurrenderCylinder sc);
+	
+	public SurrenderCylinder deleteSurrenderCylinder(SurrenderCylinder sc);
+	
+	public int CountSurrenderCylinders();
 
 }

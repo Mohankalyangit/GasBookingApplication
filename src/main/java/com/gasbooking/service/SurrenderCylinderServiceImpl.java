@@ -6,7 +6,6 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gasbooking.entity.GasBooking;
 import com.gasbooking.entity.SurrenderCylinder;
 import com.gasbooking.repository.ISurrenderCylinderRepository;
 
@@ -29,8 +28,8 @@ public class SurrenderCylinderServiceImpl implements ISurrenderCylinderService {
 		SurrenderCylinder g1 = null;
 		try {
 			g1 = surrendercylinderrepository.findById(surrendercylinderid).orElseThrow(s1);
-			g1.setCustomer(sc.getCustomer());
-			g1.setCylinder(sc.getCylinder());
+//			g1.setCustomer(sc.getCustomer());
+//			g1.setCylinder(sc.getCylinder());
 			g1.setSurrenderDate(sc.getSurrenderDate());
 			g1.setSurrenderId(sc.getSurrenderId());
 

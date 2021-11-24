@@ -1,33 +1,57 @@
 package com.gasbooking.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "surrender_cylinder")
 
-public class SurrenderCylinder {
+public class SurrenderCylinder implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1819839579413933404L;
+
 	@Id
-	@NotNull(message ="SurrenderId cannot be null ")
 	@GeneratedValue
-    // data members
+	@Column(name = "surrender_id")
 	private int surrenderId;
-	@Pattern(regexp = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$", message = "Given LocalDate. is not valid.")
+	
+	@Column(name = "surrender_date")
 	private LocalDate surrenderDate;
+	
+	@JsonBackReference
+	@OneToOne(targetEntity = Customer.class)
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
+	
+	@JsonBackReference
+	@OneToOne(targetEntity = Cylinder.class)
+	@JoinColumn(name = "cylinder_id")
 	private Cylinder cylinder;
+	
+	// constructor
 	
 	public SurrenderCylinder() {
 		super();
 	}
-	
-	public SurrenderCylinder(int surrenderId,@NotBlank(message = "Local date can't be empty") @Pattern(regexp = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$", message = "Given local Date. is not valid.") LocalDate surrenderDate, Customer customer, Cylinder cylinder) {
+
+	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Customer customer, Cylinder cylinder) {
 		super();
 		this.surrenderId = surrenderId;
 		this.surrenderDate = surrenderDate;
@@ -35,6 +59,8 @@ public class SurrenderCylinder {
 		this.cylinder = cylinder;
 	}
 
+	// setters and getters
+	
 	public int getSurrenderId() {
 		return surrenderId;
 	}
@@ -67,10 +93,12 @@ public class SurrenderCylinder {
 		this.cylinder = cylinder;
 	}
 
+	// toString
+	
 	@Override
 	public String toString() {
 		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", customer="
 				+ customer + ", cylinder=" + cylinder + "]";
 	}
-
+	
 }
