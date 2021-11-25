@@ -3,23 +3,15 @@ package com.gasbooking.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import org.springframework.stereotype.Component;
+import javax.persistence.Id;import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "surrender_cylinder")
-
 public class SurrenderCylinder implements Serializable{
 	
 	/**
@@ -35,14 +27,8 @@ public class SurrenderCylinder implements Serializable{
 	@Column(name = "surrender_date")
 	private LocalDate surrenderDate;
 	
-	@JsonBackReference
-	@OneToOne(targetEntity = Customer.class)
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
-	
-	@JsonBackReference
-	@OneToOne(targetEntity = Cylinder.class)
-	@JoinColumn(name = "cylinder_id")
+	@JsonBackReference(value = "5")
+//	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
 	private Cylinder cylinder;
 	
 	// constructor
@@ -51,11 +37,10 @@ public class SurrenderCylinder implements Serializable{
 		super();
 	}
 
-	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Customer customer, Cylinder cylinder) {
+	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Cylinder cylinder) {
 		super();
 		this.surrenderId = surrenderId;
 		this.surrenderDate = surrenderDate;
-		this.customer = customer;
 		this.cylinder = cylinder;
 	}
 
@@ -77,14 +62,6 @@ public class SurrenderCylinder implements Serializable{
 		this.surrenderDate = surrenderDate;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public Cylinder getCylinder() {
 		return cylinder;
 	}
@@ -97,8 +74,7 @@ public class SurrenderCylinder implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", customer="
-				+ customer + ", cylinder=" + cylinder + "]";
+		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", cylinder=" + cylinder + "]";
 	}
 	
 }

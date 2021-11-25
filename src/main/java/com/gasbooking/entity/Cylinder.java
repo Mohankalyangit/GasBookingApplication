@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -33,26 +32,25 @@ public class Cylinder implements Serializable {
 	private String type;
 	
 	@Column(name = "weight")
-	private float weight;
+	private double weight;
 	
 	@Column(name = "strap_color")
 	private String strapColor;
 	
 	@Column(name = "price")
-	private float price;
+	private double price;
 	
-	@JsonManagedReference
-	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
+	@JsonBackReference(value = "1")
+//	@OneToOne(targetEntity = Customer.class, mappedBy = "cylinder")
 	private Customer customer;
 	
-	
-	@JsonManagedReference
-	@OneToOne(targetEntity = SurrenderCylinder.class, mappedBy = "cylinder", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "5")
+	@OneToOne(targetEntity = SurrenderCylinder.class, cascade = CascadeType.ALL)
 	private SurrenderCylinder surrenderCylinder;
 	
 	// constructor
 	
-	public Cylinder(int cylinderId,String type,float weight,String strapColor,float price) {
+	public Cylinder(int cylinderId,String type, double weight,String strapColor, double price) {
 		super();
 		this.cylinderId=cylinderId;
 		this.type=type;
@@ -65,50 +63,63 @@ public class Cylinder implements Serializable {
 		super();
 	}
 	
-	// getters and setters
-	
-	public int getcylinderId() {
+	public int getCylinderId() {
 		return cylinderId;
 	}
-	
+
+	public void setCylinderId(int cylinderId) {
+		this.cylinderId = cylinderId;
+	}
+
 	public String getType() {
 		return type;
 	}
-	
-	public float getWeight() {
-		return weight;
-	}
-	
-	public String getStrapColor() {
-		return strapColor;
-	}
-	
-	public float getPrice() {
-		return price;
-	}
-	
-	//setters
-	public void setCylinderId(int cylinderId) {
-		this.cylinderId=cylinderId;
-	}
-	
+
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	public void setWeight(float weight) {
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-	
+
+	public String getStrapColor() {
+		return strapColor;
+	}
+
 	public void setStrapColor(String strapColor) {
 		this.strapColor = strapColor;
 	}
-	
-	public void setPrice(float price) {
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-    //ToString
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public SurrenderCylinder getSurrenderCylinder() {
+		return surrenderCylinder;
+	}
+
+	public void setSurrenderCylinder(SurrenderCylinder surrenderCylinder) {
+		this.surrenderCylinder = surrenderCylinder;
+	}
+
+	//ToString
 	
 	@Override
 	public String toString() {

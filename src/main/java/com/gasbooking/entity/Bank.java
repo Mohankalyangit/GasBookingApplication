@@ -7,11 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "bank")
@@ -31,8 +30,10 @@ public class Bank implements Serializable{
 	@Column(name = "bank_name")
 	private String bankName;
 	
-	@JsonManagedReference
-	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
+	private String address;
+	
+	@JsonBackReference(value = "2")
+//	@OneToOne(targetEntity = Customer.class, mappedBy = "bank")
 	private Customer customer;
 	
 	// constructors
@@ -41,17 +42,17 @@ public class Bank implements Serializable{
 		super();
 	}
 	
+	// getters and setters
+
 	public Bank(int bankId,
 			@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\s]+$", message = "Given Bank name is not valid/Exist.") String bankName,
-			Customer customer) {
+			String address) {
 		super();
 		this.bankId = bankId;
 		this.bankName = bankName;
-		this.customer = customer;
+		this.address = address;
 	}
 
-	// getters and setters
-	
 	public int getBankId() {
 		return bankId;
 	}
@@ -75,12 +76,20 @@ public class Bank implements Serializable{
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	// toString
 	
 	@Override
 	public String toString() {
-		return "Bank [bankId=" + bankId + ", bankName=" + bankName + "]";
+		return "Bank [bankId=" + bankId + ", bankName=" + bankName + ", address=" + address + "]";
 	}
 	
 }

@@ -1,26 +1,26 @@
 package com.gasbooking.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "customer")
-public class Customer implements Serializable {
+@PrimaryKeyJoinColumn(name = "customer_id")
+public class Customer extends AbstractUser implements Serializable {
 
 	/**
 	 * 
@@ -28,10 +28,6 @@ public class Customer implements Serializable {
 	private static final long serialVersionUID = 195158816166559020L;
 
 	// data members
-	@Id
-	@GeneratedValue
-	@Column(name = "customer_id")
-	private int customerId;
 
 	@NotNull
 	@Column(name = "account_no")
@@ -45,50 +41,37 @@ public class Customer implements Serializable {
 	@Column(name = "pan")
 	private String pan;
 
-	@JsonBackReference
+	@JsonManagedReference(value = "1")
 	@OneToOne(targetEntity = Cylinder.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "cylinder_id")
 	private Cylinder cylinder;
 
-	@JsonBackReference
+	@JsonManagedReference(value = "2")
 	@OneToOne(targetEntity = Bank.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "bank_id")
 	private Bank bank;
-
-	@JsonManagedReference
-	@OneToOne(targetEntity = SurrenderCylinder.class, mappedBy = "customer", cascade = CascadeType.ALL)
-	private SurrenderCylinder surrenderCylinder;
-
-	@JsonManagedReference
-	@OneToMany(targetEntity = GasBooking.class, cascade = CascadeType.ALL, mappedBy = "customerId")
-	private List<GasBooking> gasBooking;
+	
+	@JsonManagedReference("4")
+	@OneToMany(targetEntity = GasBooking.class, cascade = CascadeType.ALL, mappedBy = "customer")
+	private List<GasBooking> gasBooking = new ArrayList<>();
 
 	// constructors
 	public Customer() {
 		super();
 	}
+
+	// getters and setters
 	
-	public Customer(int customerId, @NotNull int accountNo,
+	public Customer(@NotNull int accountNo,
 			@Pattern(regexp = "^[A-Z]{4}0[0-9]{6,7}$", message = "Given IFSC No. is not valid.") String ifscNo,
 			@Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$", message = "Given PAN No. is not valid.") String pan,
 			Cylinder cylinder, Bank bank) {
 		super();
-		this.customerId = customerId;
 		this.accountNo = accountNo;
 		this.ifscNo = ifscNo;
 		this.pan = pan;
 		this.cylinder = cylinder;
 		this.bank = bank;
-	}
-
-	// getters and setters
-	
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
 	}
 
 	public int getAccountNo() {
@@ -131,14 +114,6 @@ public class Customer implements Serializable {
 		this.bank = bank;
 	}
 
-	public SurrenderCylinder getSurrenderCylinder() {
-		return surrenderCylinder;
-	}
-
-	public void setSurrenderCylinder(SurrenderCylinder surrenderCylinder) {
-		this.surrenderCylinder = surrenderCylinder;
-	}
-
 	public List<GasBooking> getGasBooking() {
 		return gasBooking;
 	}
@@ -151,9 +126,8 @@ public class Customer implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", accountNo=" + accountNo + ", ifscNo=" + ifscNo + ", pan=" + pan
-				+ ", cylinder=" + cylinder + ", bank=" + bank + ", surrenderCylinder=" + surrenderCylinder
-				+ ", gasBooking=" + gasBooking + "]";
+		return "Customer [accountNo=" + accountNo + ", ifscNo=" + ifscNo + ", pan=" + pan + ", cylinder=" + cylinder
+				+ ", bank=" + bank + "]";
 	}
 	
 }

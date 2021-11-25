@@ -2,6 +2,8 @@ package com.gasbooking.controller;
 
 import java.util.InputMismatchException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gasbooking.entity.SurrenderCylinder;
+import com.gasbooking.exception.CylinderNotFoundException;
 import com.gasbooking.exception.SurrenderCylinderNotFoundException;
 import com.gasbooking.service.ISurrenderCylinderService;
 
@@ -32,23 +35,24 @@ public class SurrenderCylinderController {
 			return new ResponseEntity<SurrenderCylinder>(insertedcylinder, HttpStatus.ACCEPTED);
 	}
 	
-	@PutMapping("/update")
-	public ResponseEntity<?> updateSurrenderCylinder(@RequestBody SurrenderCylinder surrendercylinder) {
-		SurrenderCylinder updatedCylinder = surrendercylinderservice.updateSurrenderCylinder(surrendercylinder);
+	@PutMapping("/update/{surrenderId}")
+	public ResponseEntity<?> updateSurrenderCylinder(@PathVariable int surrenderId, @Valid  @RequestBody SurrenderCylinder surrendercylinder) {
+		SurrenderCylinder updatedCylinder = surrendercylinderservice.updateSurrenderCylinder(surrenderId, surrendercylinder);
 		return new ResponseEntity<SurrenderCylinder>(updatedCylinder, HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/deleteCustomer/{surrenderId}")
-	public ResponseEntity<?> deleteSurrenderCylinder(@PathVariable SurrenderCylinder surrendercylinder) {
-		SurrenderCylinder deletedCylinder = surrendercylinderservice.deleteSurrenderCylinder(surrendercylinder);
+	public ResponseEntity<?> deleteSurrenderCylinder(@PathVariable int surrenderId,SurrenderCylinder surrendercylinder)throws CylinderNotFoundException {
+		SurrenderCylinder deletedCylinder = surrendercylinderservice.deleteSurrenderCylinder(surrenderId);
 		return new ResponseEntity<SurrenderCylinder>(deletedCylinder, HttpStatus.OK);
 	}
 	
 	@GetMapping("/count")
-	public int CountSurrenderCylinders()
+	public int countSurrenderCylinder( )
 	{
 		return surrendercylinderservice.CountSurrenderCylinders();
 		
-	}	
+	}
+	
 }
 
