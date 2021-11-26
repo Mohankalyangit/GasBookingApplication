@@ -10,5 +10,6 @@ import com.gasbooking.entity.SurrenderCylinder;
 public interface ISurrenderCylinderRepository extends JpaRepository<SurrenderCylinder,Integer>{
 	
 
+
 }
 

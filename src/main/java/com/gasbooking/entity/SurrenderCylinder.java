@@ -3,17 +3,22 @@ package com.gasbooking.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "surrender_cylinder")
-public class SurrenderCylinder implements Serializable{
-	
+public class SurrenderCylinder implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -21,23 +26,25 @@ public class SurrenderCylinder implements Serializable{
 
 	@Id
 	@GeneratedValue
+	@NotNull(message = "Surrender Id cannot be null ")
 	@Column(name = "surrender_id")
 	private int surrenderId;
-	
+
 	@Column(name = "surrender_date")
 	private LocalDate surrenderDate;
-	
+
 	@JsonBackReference(value = "5")
-//	@OneToOne(targetEntity = Cylinder.class, mappedBy = "surrenderCylinder")
+    
 	private Cylinder cylinder;
-	
+
 	// constructor
-	
+
 	public SurrenderCylinder() {
 		super();
 	}
 
-	public SurrenderCylinder(int surrenderId, LocalDate surrenderDate, Cylinder cylinder) {
+	public SurrenderCylinder(@NotNull(message = "Surrender Id cannot be null ") int surrenderId,
+			LocalDate surrenderDate, Cylinder cylinder) {
 		super();
 		this.surrenderId = surrenderId;
 		this.surrenderDate = surrenderDate;
@@ -45,7 +52,7 @@ public class SurrenderCylinder implements Serializable{
 	}
 
 	// setters and getters
-	
+
 	public int getSurrenderId() {
 		return surrenderId;
 	}
@@ -71,10 +78,11 @@ public class SurrenderCylinder implements Serializable{
 	}
 
 	// toString
-	
+
 	@Override
 	public String toString() {
-		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", cylinder=" + cylinder + "]";
+		return "SurrenderCylinder [surrenderId=" + surrenderId + ", surrenderDate=" + surrenderDate + ", cylinder="
+				+ cylinder + "]";
 	}
-	
+
 }

@@ -33,10 +33,10 @@ public class SurrenderServiceTestImpl {
 
 	@Test
 
-	void testinsertingsurrendercylinder() {
-		SurrenderCylinder sc = new SurrenderCylinder();
-
-		sc.setSurrenderId(0);
+	public void testinsertingsurrendercylinder() {
+		SurrenderCylinder sc = new SurrenderCylinder();//creating the object 
+               
+		sc.setSurrenderId(2);
 		sc.setSurrenderDate(LocalDate.now());
 
 		Mockito.when(surrenderRepository.save(sc)).thenReturn(sc);
@@ -47,33 +47,32 @@ public class SurrenderServiceTestImpl {
 
 	public void testupdatesurrendercylinder() {
 
-		SurrenderCylinder s2 = new SurrenderCylinder(2, LocalDate.now(), null);
-
+		Cylinder c1 = new Cylinder(1, "LPG", 14.2f, "blue", 141.0f);
+		SurrenderCylinder s2 = new SurrenderCylinder(2, LocalDate.now(), c1);
 		when(surrenderRepository.existsById(s2.getSurrenderId())).thenReturn(true);
 		when(surrenderRepository.save(s2)).thenReturn(s2);
-		assertEquals(s2.getSurrenderId(),
-				surrenderCylinderServiceImplement.insertSurrenderCylinder(s2).getSurrenderId());
+		assertEquals(s2.getSurrenderId(),surrenderCylinderServiceImplement.insertSurrenderCylinder(s2).getSurrenderId());
 		assertEquals(s2.getSurrenderDate(),
 				surrenderCylinderServiceImplement.insertSurrenderCylinder(s2).getSurrenderDate());
 		assertEquals(s2.getCylinder(), surrenderCylinderServiceImplement.insertSurrenderCylinder(s2).getCylinder());
 	}
-	
-	 @Test
-		public void testDeletesurrendercylinder() {
-		 SurrenderCylinder s1 = new SurrenderCylinder(1, LocalDate.now(), null);
-			
-			when(surrenderRepository.existsById(s1.getSurrenderId())).thenReturn(true);
-			surrenderRepository.delete(s1);
-			verify(surrenderRepository, times(1)).delete(s1);
-		}
-	    
-	    @Test
-	    public void testCountsurrendercylinder() {
-	    	SurrenderCylinder s1 = new SurrenderCylinder(1, LocalDate.now(), null);
-	    	when(surrenderRepository.existsById(s1.getSurrenderId())).thenReturn(true);
-	    	surrenderRepository.count();
-	    	verify(surrenderRepository,times(1)).count();
-	    }
+
+	@Test
+	public void testDeletesurrendercylinder() {
+		Cylinder c1 = new Cylinder(1, "LPG", 14.2f, "blue", 141.0f);
+		SurrenderCylinder s1 = new SurrenderCylinder(1, LocalDate.now(), c1);
+
+		when(surrenderRepository.existsById(s1.getSurrenderId())).thenReturn(true);
+		surrenderRepository.delete(s1);
+		verify(surrenderRepository, times(1)).delete(s1);
 	}
 
-
+	@Test
+	public void testCountsurrendercylinder() {
+		Cylinder c1 = new Cylinder(1, "LPG", 14.2f, "blue", 141.0f);
+		SurrenderCylinder s1 = new SurrenderCylinder(1, LocalDate.now(), c1);
+		when(surrenderRepository.existsById(s1.getSurrenderId())).thenReturn(true);
+		surrenderRepository.count();
+		verify(surrenderRepository, times(1)).count();
+	}
+}

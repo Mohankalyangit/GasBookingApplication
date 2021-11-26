@@ -22,37 +22,39 @@ import com.gasbooking.exception.CylinderNotFoundException;
 import com.gasbooking.exception.SurrenderCylinderNotFoundException;
 import com.gasbooking.service.ISurrenderCylinderService;
 
+//RestController 
 @RestController
-@RequestMapping(path="/surrendercylinder")
+@RequestMapping(path = "/surrendercylinder")
 public class SurrenderCylinderController {
 
 	@Autowired
 	ISurrenderCylinderService surrendercylinderservice;
-	
+
 	@PostMapping("/insertSurrenderCylinder")
 	public ResponseEntity<?> insertSurrenderCylinder(@RequestBody SurrenderCylinder surrendercylinder) {
-			SurrenderCylinder insertedcylinder = surrendercylinderservice.insertSurrenderCylinder(surrendercylinder);
-			return new ResponseEntity<SurrenderCylinder>(insertedcylinder, HttpStatus.ACCEPTED);
+		SurrenderCylinder insertedcylinder = surrendercylinderservice.insertSurrenderCylinder(surrendercylinder);
+		return new ResponseEntity<SurrenderCylinder>(insertedcylinder, HttpStatus.ACCEPTED);
+
 	}
-	
+
 	@PutMapping("/updateSurrenderCylinder/{surrenderId}")
-	public ResponseEntity<?> updateSurrenderCylinder(@PathVariable int surrenderId, @Valid  @RequestBody SurrenderCylinder surrendercylinder) {
-		SurrenderCylinder updatedCylinder = surrendercylinderservice.updateSurrenderCylinder(surrenderId, surrendercylinder);
+	public ResponseEntity<?> updateSurrenderCylinder(@PathVariable("surrenderId") int surrenderId,
+			@Valid @RequestBody SurrenderCylinder surrendercylinder) {
+		SurrenderCylinder updatedCylinder = surrendercylinderservice.updateSurrenderCylinder(surrenderId,
+				surrendercylinder);
 		return new ResponseEntity<SurrenderCylinder>(updatedCylinder, HttpStatus.ACCEPTED);
 	}
-	
+
 	@DeleteMapping("/deleteCustomerSurrenderCylinder/{surrenderId}")
-	public ResponseEntity<?> deleteSurrenderCylinder(@PathVariable int surrenderId,SurrenderCylinder surrendercylinder)throws CylinderNotFoundException {
+	public ResponseEntity<?> deleteSurrenderCylinder(@PathVariable int surrenderId) throws CylinderNotFoundException {
 		SurrenderCylinder deletedCylinder = surrendercylinderservice.deleteSurrenderCylinder(surrenderId);
 		return new ResponseEntity<SurrenderCylinder>(deletedCylinder, HttpStatus.OK);
 	}
-	
-	@GetMapping("/countSurrenderCylinder")
-	public int countSurrenderCylinder( )
-	{
-		return surrendercylinderservice.CountSurrenderCylinders();
-		
-	}
-	
-}
 
+	@GetMapping("/countSurrenderCylinder")
+	public int countSurrenderCylinder() {
+		return surrendercylinderservice.CountSurrenderCylinders();
+
+	}
+
+}
