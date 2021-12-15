@@ -23,7 +23,7 @@ public class BankController {
 	@PostMapping("/insertBank")
 	public ResponseEntity<?> insertBank(@RequestBody Bank bank) {
 		Bank insertedBank = bankService.insertBank(bank);
-		return new ResponseEntity<Bank>(insertedBank, HttpStatus.CREATED);
+		return new ResponseEntity<Bank>(insertedBank,	 HttpStatus.CREATED);
 	}
 
 	@PutMapping("/updateBank{bankId}")

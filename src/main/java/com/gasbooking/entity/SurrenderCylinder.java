@@ -34,7 +34,6 @@ public class SurrenderCylinder implements Serializable {
 	private LocalDate surrenderDate;
 
 	@JsonBackReference(value = "5")
-    
 	private Cylinder cylinder;
 
 	// constructor
